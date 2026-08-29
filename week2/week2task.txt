@@ -1,0 +1,50 @@
+Selamlar,
+
+İlk haftayı tamamlayan herkesin eline sağlık. Teslimler ve toplantıdaki sunumlar çok iyiydi.
+
+YZ50'nin ikinci haftası başlıyor. Bu haftanın konusu: backpropagation. Geçen hafta türevleri tek tek, sayısal olarak hesapladınız. Bu hafta hepsini tek bir geriye geçişte hesaplayan mekanizmayı kuracaksınız. Karpathy'nin micrograd kütüphanesinin küçük bir versiyonunu kendiniz yazacaksınız.
+
+Bu hafta öğreneceklerin:
+
+- Chain rule (zincir kuralı) sezgisi
+- Computation graph: her işlem bir node, gradient çıktıdan girdiye doğru akar
+- Backward pass: her node kendi local derivative'ini üstten gelen gradient ile çarpar
+- Analitik gradient'in numerical derivative ile doğrulanması
+- PyTorch'taki autograd'ın çekirdeğinde de aynı mekanizmanın olduğu
+
+Kaynaklar:
+
+1. Andrej Karpathy, "The spelled-out intro to neural networks and backpropagation": https://www.youtube.com/watch?v=VMj-3S1tku0 (bu sefer videonun tamamı, ilk 19 dakikasını geçen hafta izledin)
+2. Karpathy'nin micrograd reposu, takıldığında referans olarak: https://github.com/karpathy/micrograd
+3. 3Blue1Brown, "What is backpropagation really doing?": https://www.youtube.com/watch?v=Ilg3gGewQ5U
+4. 3Blue1Brown, "Backpropagation calculus": https://www.youtube.com/watch?v=tIeHLnjs5U8
+
+Süreç boyunca hafta içerisinde de paylaşımlar yapacağız.
+
+Bu haftanın görevi (yanlarında videonun ilgili bölümleri):
+
+1. Kendi Value sınıfını yaz, toplama ve çarpma ile başla. Her yeni Value, kendisini üreten Value'ları ve hangi işlemden çıktığını saklasın. İstersen videodaki gibi computation graph'i graphviz ile çizdir. (19:09 - 32:10)
+2. Otomatikleştirmeden önce gradient'leri videodaki iki örnekte elle doldur: önce basit ifade (32:10 - 51:10), sonra tek bir neuron. Neuron örneğinde tanh'ı Value'ya ekleyeceksin. Chain rule'u burada içselleştireceksin. (52:52 - 1:09:02)
+3. backward() metodunu yaz: çıktının gradient'ini 1 yap, node'ları ters topological sırayla gez, her node'da chain rule uygula. Bir değişken birden fazla yerde kullanılıyorsa gradient'leri topla, üzerine yazma. (1:09:02 - 1:27:05)
+4. tanh'ı parçala: exp, bölme ve pow operasyonlarını ekle, aynı gradient'leri aldığını göster. Sonra doğrula: aynı ifadeyi aynı değerlerle hem backward() ile hem geçen haftaki numerical derivative ile hem de PyTorch ile hesapla, üçünün eşleştiğini göster. (1:27:05 - 1:43:55)
+5. Videodaki sırayı izleyerek Neuron, Layer ve MLP sınıflarını kur. Parametreleri tek listede topla, videodaki küçük veri setiyle eğit, loss'un adım adım düştüğünü göster. Her adımda gradient'leri sıfırlamayı unutma, videodaki meşhur bug. (1:43:55 - 2:14:03)
+
+Videoyu izlediğinde görevler netleşecek. İzledikten sonra kafanda oturmayan görev kalırsa bu maili olduğu gibi bir AI'a context olarak ver, görevi sana açıklatmasını iste ve kafandaki soru işaretlerini giderene kadar üzerinden geç. Anlamayı çok kolaylaştıracak.
+
+Bir uyarı: bu hafta ilk haftadan daha yoğun. Video 2.5 saat, durdurup kendin yazarak izlediğinde daha uzun sürüyor. Haftaya toplam 10-15 saat ayırmanı öneririz. Görev 5'te tıkanırsan 4'e kadar olan kısmı teslim et ve nerede kaldığını yaz. Bitiremeden anlayarak gelmek, kopyalayıp bitirmekten değerlidir.
+
+Kodu kendin yazacaksın. Kavramları ve detayları öğrenmek için AI'a danışabilirsin fakat kodları doğrudan AI'a yazdırmak yasak. Görev 4 biraz da bu yüzden var: sayılar eşleşmiyorsa nedenini bulmak, öğrenmenin kendisi.
+
+Teslim:
+
+- Kodu geçen haftaki GitHub repona "hafta-2" klasörü olarak ekle. "yz50" kullanıcısı collaborator olarak ekli kalsın.
+- Bir video kaydet: ne yaptığını, nerede zorlandığını ve backward()'ın nasıl çalıştığını kod üzerinden anlat. Geçen haftadan öğrendiğimiz şu: anlatabilmek, kodu yazmak kadar önemli. Videolarda bunu görmek istiyoruz.
+- Repo linkini ve videoyu bu maile cevap olarak gönder.
+- Son teslim: 29 Ağustos Cumartesi 19.00
+
+Sorularınız veya takıldığınız noktalar olursa bu maile dönüş yapabilirsiniz.
+
+Kolay gelsin.
+
+
+YZ50
