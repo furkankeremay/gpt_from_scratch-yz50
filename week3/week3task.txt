@@ -1,0 +1,53 @@
+Selamlar,
+
+İkinci haftayı tamamlayan herkesin eline sağlık. Artık elinizde kendi yazdığınız, çalışan bir micrograd var.
+
+Toplantıda söz verdiğimiz Whatsapp grubunu açıyoruz. Katılmak istersen telefon numaranı yazıp bu maile cevap ver, seni gruba ekleyelim.
+
+YZ50'nin üçüncü haftası başlıyor. Bu haftanın konusu: ilk language model'iniz. Bigram karakter modeli bir harfe bakıp sıradaki harfi tahmin eder. Önce sayarak kuracaksınız, sonra aynı modeli tek katmanlı bir sinir ağıyla eğiteceksiniz. İki yol aynı sonuca çıkacak. Veri iki aşamalı: görev 1-4'te videoyu Karpathy'nin İngilizce isim listesiyle (names.txt) takip edeceksiniz, görev 5'te aynı modeli internetten bulacağınız bir Türkçe isim listesiyle çalıştıracaksınız.
+
+Bu hafta öğreneceklerin:
+
+- Bigram karakter modeli: bir harften sıradaki harfin olasılığı
+- Sayım tablosunu olasılık dağılımına çevirme ve modelden sampling
+- Negative log likelihood: modelin kalitesini tek sayıyla ölçme, neden bu loss
+- One-hot encoding, logits ve softmax ile olasılığa geçiş
+- Aynı bigram modelinin hem sayımla hem gradient descent ile kurulabildiği
+- Geçen hafta yazdığın backward()'ın burada da işin çekirdeği olduğu: PyTorch aynı mekanizmayı tensor'larla çalıştırıyor
+
+Kaynaklar:
+
+1. Andrej Karpathy, "The spelled-out intro to language modeling: building makemore": https://www.youtube.com/watch?v=PaCmpygFfXo
+2. Karpathy'nin makemore reposu, takıldığında referans olarak (İngilizce isim listesi names.txt de burada): https://github.com/karpathy/makemore
+3. PyTorch broadcasting kuralları, görev 2'de lazım olacak: https://pytorch.org/docs/stable/notes/broadcasting.html
+
+Süreç boyunca hafta içerisinde de paylaşımlar yapacağız.
+
+Bu haftanın görevi (yanlarında videonun ilgili bölümleri):
+
+1. Karpathy'nin İngilizce names.txt dosyasıyla başla, Türkçe veri görev 5'te gelecek. Bigram'ları önce Python dictionary ile, sonra 27x27 torch tensor'da say. Tabloyu videodaki gibi görselleştir. (3:03 - 24:02)
+2. Sayım tablosunu satır satır olasılıklara çevir ve modelden yeni isimler örnekle. Broadcasting'e dikkat: videodaki keepdim tuzağı, sessizce yanlış model üreten cinsten. (24:02 - 50:14)
+3. Negative log likelihood'u hesapla. Smoothing için sahte sayım ekle. Neden log, neden negatif, neden ortalama: bunu teslim videonda kendi cümlelerinle anlatacaksın. (50:14 - 1:02:57)
+4. Aynı modeli tek katmanlı sinir ağıyla kur: one-hot input, 27x27 weight matrix, softmax, NLL loss, gradient descent döngüsü. Loss'un görev 3'teki sayım modelinin loss'una yaklaştığını göster. Buradaki backward() geçen hafta micrograd'da kendi yazdığın mekanizmanın aynısı. (1:02:57 - 1:54:31)
+5. İnternetten bir Türkçe isim listesi bul (açık kaynak listeler var, GitHub'da arayabilirsin) ve iki modeli de bu veriyle tekrar koştur. Alfabeyi Türkçe karakterlerle genişlet (ç, ğ, ı, ö, ş, ü). Modelin ürettiği isimlerden örnekleri ve loss'u göster.
+6. Ek, erken bitirenler için: modeli trigram'a çevir (iki önceki harfe bak), veriyi train/dev/test olarak %80/%10/%10 böl, smoothing gücünü dev loss'una göre ayarla. Bigram ile trigram loss'unu karşılaştır ve ürettiği isimlerin nasıl değiştiğini göster. Videoda bunun kodu yok, Karpathy videonun sonunda egzersiz olarak veriyor.
+
+Videoyu izlediğinde görevler netleşecek. İzledikten sonra kafanda oturmayan görev kalırsa bu maili olduğu gibi bir AI'a context olarak ver, görevi sana açıklatmasını iste ve kafandaki soru işaretlerini giderene kadar üzerinden geç.
+
+Bu hafta geçen haftadan daha hafif. Video yaklaşık 2 saat.
+
+Kodu kendin yazacaksın. Kavramları ve detayları öğrenmek için AI'a danışabilirsin fakat kodları doğrudan AI'a yazdırmak yasak. Türkçe isim listesi için de aynı kural: veriyi bulmak ve temizlemek görevin parçası.
+
+Teslim:
+
+- Kodu GitHub repona "hafta-3" klasörü olarak ekle. "yz50" kullanıcısı collaborator olarak ekli kalsın.
+- Bir video kaydet: ne yaptığını, nerede zorlandığını ve negative log likelihood'un neden bu işin loss'u olduğunu kod üzerinden anlat. Türkçe veriyle ürettiğin isimlerden örnekler göster. Bu video konseptleri tam olarak içselleştirmen adına çok önemli, bir şeyi ne kadar iyi aktarabiliyorsan o kadar iyi öğrenmişsin demektir.
+- Repo linkini ve videoyu bu maile cevap olarak gönder.
+- Son teslim: 6 Eylül Pazar 19.00
+
+Sorularınız veya takıldığınız noktalar olursa bu maile dönüş yapabilirsiniz.
+
+Kolay gelsin.
+
+
+YZ50 Ekibi
