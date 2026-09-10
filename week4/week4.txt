@@ -1,0 +1,53 @@
+Selamlar,
+
+Üçüncü haftayı tamamlayan herkesin eline sağlık. Pazar akşamki toplantıda gördük: Bigram tablosu bir harflik hafızayla ancak bu kadarını yapıyor, trigram'a çıkınca tablo şişiyor ve veri yetmiyor.
+
+YZ50'nin dördüncü haftası başlıyor. Bu haftanın konusu: ilk gerçek neural network language model'iniz. Tablo yok. Her harfi küçük bir vektöre (embedding) çeviriyorsunuz, önceki üç harfin vektörlerini yan yana koyup geçen hafta kurduğunuz türden bir MLP'ye veriyorsunuz, model sıradaki harfi tahmin ediyor. Bu Bengio'nun 2003 makalesindeki model. Haftanın ikinci yarısında bu modeli eğitirken içinde ne olup bittiğine bakıyorsunuz: aktivasyonlar neden doyuyor, init neden önemli, BatchNorm neyi düzeltiyor.
+
+Bu hafta öğreneceklerin:
+
+- Embedding: harfi one-hot vektör yerine öğrenilen küçük bir vektörle temsil etmek
+- Bağlam penceresi: bir harf yerine önceki üç harfe bakan model
+- Minibatch ile eğitim ve learning rate seçimi
+- Train / dev / test ayrımı ve neden gerektiği
+- Tanh saturation: aktivasyonlar 1 ve -1'e yığılınca gradient'in ölmesi
+- Kaiming init: ağırlıkları hangi ölçekte başlatmak gerektiği
+- BatchNorm: aktivasyonları katman katman normalize etmek ve bunun eğitime etkisi
+
+Kaynaklar:
+
+1. Andrej Karpathy, "Building makemore Part 2: MLP": https://www.youtube.com/watch?v=TCH_1BHY58I
+2. Andrej Karpathy, "Building makemore Part 3: Activations & Gradients, BatchNorm": https://www.youtube.com/watch?v=P6sfmUTpUmc
+3. "A Neural Probabilistic Language Model" (Bengio, 2003), bu haftaki modelin makalesi, Part 2'nin ilk 9 dakikasında anlatılıyor, okumak isteğe bağlı: https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf
+4. Karpathy'nin makemore reposu: https://github.com/karpathy/makemore
+
+Süreç boyunca hafta içerisinde de paylaşımlar yapacağız.
+
+Bu haftanın görevi (yanlarında videonun ilgili bölümleri):
+
+1. Part 2 ile başla. Önceki üç harfi bağlam alan veri setini kur (X: 3 harf indeksi, Y: sıradaki harf). Embedding tablosunu (27x2) oluştur, indeksleme ile embedding'leri çek. (Part 2, 9:03 - 18:35)
+2. Gizli katmanı ve çıkış katmanını kur: embedding'leri düzleştir, W1 ve b1 ile tanh, W2 ve b2 ile logits. Loss'u geçen haftaki gibi elle hesapla, sonra F.cross_entropy ile aynı sonucu aldığını göster ve neden onu tercih ettiğimizi videodan anla. (18:35 - 37:56)
+3. Eğitim döngüsünü kur: önce tek bir minibatch'i overfit et, sonra bütün veriyi minibatch'lerle eğit. Learning rate'i videodaki gibi tara ve iyi bir değer seç. Veriyi train / dev / test olarak böl, loss'u dev üzerinde raporla. (37:56 - 1:00:49)
+4. Gizli katmanı ve embedding boyutunu büyütüp dev loss'un nasıl değiştiğini göster. Embedding'leri 2 boyutta çizdir: hangi harfler birbirine yakın düşüyor? Modelden isimler örnekle, bigram'ınkilerle karşılaştır. (1:00:49 - 1:13:24)
+5. Part 3'e geç. Aynı modelde başlangıç loss'unun neden çok yüksek olduğunu ve tanh'ın neden doyduğunu göster, videodaki histogramı çizdir. Kaiming init ile ağırlıkları ölçekle, iki sorunun da düzeldiğini göster. (Part 3, 4:19 - 40:40)
+6. BatchNorm katmanını gizli katmandan sonra ekle. Eğitim sırasında batch istatistiği, tahmin sırasında running mean kullan. BatchNorm'lu ve BatchNorm'suz modelin dev loss'unu karşılaştır. (40:40 - 1:04:50)
+7. Geçen haftaki Türkçe isim listenle aynı modeli eğit. Türkçe'de ürettiği isimlerden örnekler ve dev loss'u göster. Bigram'ın Türkçe sonuçlarıyla yan yana koy.
+8. Ek, erken bitirenler için, Karpathy'nin video altındaki egzersizlerinden birini seç: Bütün weight ve bias'ları sıfırla başlat, ağı eğit, neyin kısmen öğrendiğini gradient ve aktivasyonlardan bul (Part 3, E01). Ya da BatchNorm'u eğitimden sonra bir önceki Linear katmanın W ve b'sine katla, forward pass'in aynı kaldığını göster (Part 3, E02). Ya da hiperparametreleri ayarlayıp Karpathy'nin 2.2 validation loss'unu geç (Part 2, E01).
+
+Videoları izlediğinde görevler netleşecek. İzledikten sonra kafanda oturmayan görev kalırsa bu maili olduğu gibi bir AI'a context olarak ver, görevi sana açıklatmasını iste ve kafandaki soru işaretlerini giderene kadar üzerinden geç.
+
+Bu hafta iki video var, toplam 3 saat 10 dakika. Geçen haftadan ağır. Görev 1-4 Part 2, görev 5-6 Part 3. Görev 6'da tıkanırsan 5'e kadar olan kısmı teslim et ve nerede kaldığını yaz.
+
+Kodu kendin yazacaksın. Kavramları ve detayları öğrenmek için AI'a danışabilirsin fakat kodları doğrudan AI'a yazdırmak yasak. Türkçe veri setinizi büyütmek isteyenler için Tunga'nın toplantıda belirttiği gibi veri üretimi için bir LLM kullanabilirsiniz, bu sizin ilk distillation'ınız olur.
+
+Teslim:
+
+- Kodu GitHub repona "hafta-4" klasörü olarak ekle. "yz50" kullanıcısı collaborator olarak ekli kalsın.
+- Bir video kaydet: ne yaptığını, nerede zorlandığını ve BatchNorm'un neyi düzelttiğini kod ve grafik üzerinden anlat. Embedding çizimini ve Türkçe ürettiğin isimleri göster.
+- Repo linkini ve videoyu bu maile cevap olarak gönder.
+- Son teslim: 13 Eylül Pazar 19.00
+
+Sorularınız veya takıldığınız noktalar olursa bu maile dönüş yapabilirsiniz.
+
+Kolay gelsin.
+YZ50 Ekibi
