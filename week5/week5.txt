@@ -1,0 +1,33 @@
+Dördüncü haftayı tamamlayan herkesin eline sağlık. Bu hafta ağırdı, farkındayız: iki video, üç saat, sekiz görev. Bu hafta yükü biraz daha dengeli dağıtıp geçen haftadan tam oturmayan kısımları oturtmanız için de zaman bırakıyoruz.
+
+YZ50'nin beşinci haftası başlıyor. Konu: geçen hafta kurduğunuz modelin gradient'lerini loss.backward() olmadan, elle hesaplamak. Autograd'ın ne yaptığını anlamanın tek yolu bir kez kendiniz yapmak.
+
+Bu hafta öğreneceklerin:
+
+- Her ara değişkenin gradient'ini elle yazmak ve PyTorch'unkiyle karşılaştırmak
+- Broadcasting'in gradient'e etkisi: toplanan boyut geri dönerken nerede sum alınır
+- Cross entropy ve BatchNorm'un türevlerinin neden tek satıra indiği
+
+Kaynak:
+
+1. Andrej Karpathy, "Building makemore Part 4: Becoming a Backprop Ninja": https://www.youtube.com/watch?v=q8SA3rM6ckI
+2. Videodaki egzersiz notebook'u: https://github.com/karpathy/nn-zero-to-hero/tree/master/lectures/makemore
+
+Bu haftanın görevi:
+
+1. Geçen haftaki MLP + BatchNorm modelini videodaki gibi küçük adımlara böl (logits, counts, probs, logprobs, ...) ve loss.backward() ile her ara değişkenin gradient'ini al. (Egzersiz 1, videonun ilk yarısı)
+2. Aynı gradient'leri elle yaz, cmp fonksiyonuyla tek tek karşılaştır. Hepsi "exact" ya da "approximate" olana kadar devam et. Takıldığın türevi videoda bul, ama önce kendin dene.
+3. Ek, isteyenler için: cross entropy'nin ve BatchNorm'un geriye yayılımını tek ifadeye indir ve modeli loss.backward() olmadan kendi gradient'lerinle eğit. (Egzersiz 2, 3, 4)
+
+Geçen haftadan eksik kalan görev varsa: bu hafta hafta-4 klasörüne tamamlayıp ekleyebilirsin. Teslim mailinde "hafta 4'e şunları ekledim" diye yaz, yeniden değerlendiririz. Hafta 4'ü tamamlamak bu haftanın görevi kadar değerli.
+
+Kodu kendin yazacaksın. Kavramları öğrenmek için AI'a danışabilirsin, kodu AI'a yazdırmak yasak. "Bu ifadenin türevi ne" diye sormak serbest, gradient kodunu yazdırmak değil.
+
+Teslim:
+
+- Kodu GitHub repona "hafta-5" klasörü olarak ekle. "yz50" kullanıcısı collaborator olarak ekli kalsın.
+- Bir video kaydet: en çok zorlandığın türevi ve nasıl doğruladığını anlat.
+- Repo linkini ve videoyu bu maile cevap olarak gönder.
+- Son teslim: 20 Eylül Pazar 19.00
+
+Sorularınız olursa bu maile dönüş yapabilirsiniz.
