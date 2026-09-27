@@ -1,0 +1,46 @@
+Beşinci haftayı tamamlayan herkesin eline sağlık. Dün akşamki toplantıda gördük: loss.backward() satırını sildiniz, her gradient'i elle yazdınız, cmp tablosu da doğruladı. Artık autograd'ın ne yaptığını biliyorsunuz.
+
+YZ50'nin altıncı haftası başlıyor. Konu iki parçalı. Birincisi: dağınık kodunuzu sınıflara topluyorsunuz. Linear, BatchNorm1d, Tanh, Embedding, Flatten ve Sequential'ı kendiniz yazıyorsunuz, yani torch.nn'in yaptığı işi kendi elinizden çıkarıyorsunuz. İkincisi: bağlam penceresini 3 harften 8 harfe çıkarıyorsunuz, ama sekiz harfi tek seferde düzleştirmiyorsunuz. İkişer ikişer birleştiren bir ağaç kuruyorsunuz. Bu, DeepMind'ın 2016'daki WaveNet mimarisi.
+
+Bu hafta öğreneceklerin:
+
+- Kendi katman sınıflarını yazmak: Linear, BatchNorm1d, Tanh, Embedding, Flatten, Sequential
+- torch.nn'in içinde ne olduğu: çağrılabilir katman, parameters(), eğitim ve tahmin kipi
+- Bağlamı büyütmenin tek başına yetmediği, harflerin nasıl birleştirildiğinin de sonucu değiştirdiği
+- Hiyerarşik birleştirme: 8 harfi ikişer ikişer, katman katman karıştırmak
+- Üç boyutlu tensörde BatchNorm: ortalama hangi eksenlerde alınır ve gözden kaçan hata nerede
+- Tensor şekillerini takip etmek, PyTorch belgelerini okumak, deney kurmak
+
+Kaynaklar:
+
+1. Andrej Karpathy, "Building makemore Part 5: Building a WaveNet": https://www.youtube.com/watch?v=t3YJ5hKiMQ0
+2. Videodaki notebook: https://github.com/karpathy/nn-zero-to-hero/blob/master/lectures/makemore/makemore_part5_cnn1.ipynb
+3. Karpathy'nin makemore reposu: https://github.com/karpathy/makemore
+4. "WaveNet: A Generative Model for Raw Audio" (DeepMind, 2016), mimarinin geldiği makale, okumak isteğe bağlı: https://arxiv.org/abs/1609.03499
+
+Bu haftanın görevi (yanlarında videonun ilgili bölümleri):
+
+1. Hafta 4'te yazdığın MLP + BatchNorm kodunu sınıflara topla: Linear, BatchNorm1d, Tanh, Embedding, Flatten, Sequential. Model tek bir Sequential olsun, eğitim döngüsü içindeki katmanların adını bilmesin. Loss eğrisi çizimini videodaki gibi düzelt. (1:40 - 17:11)
+2. Bağlamı 3 harften 8'e çıkar. Başka hiçbir şeyi değiştirmeden aynı düz modeli koş, dev loss'u kaydet. Bu senin karşılaştırma tabanın. Parametre sayısı ne kadar arttı, loss ne kadar düştü, yaz. (17:11 - 21:36)
+3. WaveNet'i kur. 8 harfi tek seferde düzleştirmek yerine ikişer ikişer birleştir, üç katmanda tek vektöre in. Her katmanın çıktısının şeklini yazdır ve o şeklin neden öyle olduğunu kendi cümlelerinle yaz. (21:36 - 37:41)
+4. Şekilleri yazdırırken BatchNorm1d'nin üç boyutlu girdide yanlış çalıştığını göreceksin. Hatanın ne olduğunu ve ortalamanın hangi eksenlerde alınması gerektiğini göster, düzelt, modeli yeniden eğit. Düzeltmeden önceki ve sonraki dev loss'u yan yana koy. (37:41 - 46:07)
+5. Modeli büyüt: embedding boyutunu ve katman genişliğini artır. Tek tablo çıkar, üç satır olsun: bağlam 3 MLP, bağlam 8 düz MLP, bağlam 8 WaveNet. Sütunlar parametre sayısı ve dev loss. (46:07 - 46:58)
+6. Türkçe isim listenle aynı WaveNet'i eğit. Ürettiği isimlerden örnek ver, dev loss'u hafta 4'ün Türkçe MLP'siyle karşılaştır. Türkçe'de bağlamı 8'e çıkarmak ne kazandırdı, yaz.
+7. Ek, erken bitirenler için, üçünden biri. (a) Aynı hiyerarşik yapıyı torch.nn.Conv1d ile dilated causal convolution olarak kur, iki modelin aynı sonucu verdiğini göster (47:44 - 51:34). (b) Konfigürasyonları tek tek elle denemek yerine listeden okuyup sonuçları tabloya yazan küçük bir deney düzeneği yaz (46:58 - 47:44). (c) Karpathy videonun sonunda kendi loss'unu geçmeye çağırıyor, kabul et: hiperparametrelerle oyna, onun sayısını geç, ne denediğini not et (55:26 - 56:21).
+
+Video 56 dakika, geçen haftanın yarısı kadar. Asıl iş videonun uzunluğunda değil: kodu sınıflara toplarken ve şekilleri takip ederken vakit geçecek. Takılırsan şekli yazdır, hataların çoğu orada görünür. Videoyu izledikten sonra oturmayan görev kalırsa bu maili olduğu gibi bir AI'a ver ve görevi sana açıklatmasını iste.
+
+Geçen haftalardan eksik kalan görev varsa: bu hafta hafta-4 ya da hafta-5 klasörüne tamamlayıp ekleyebilirsin. Teslim mailinde "hafta 5'e şunları ekledim" diye yaz, yeniden değerlendiririz.
+
+Bir not: geçen haftanın değerlendirmesinde kodların çoğu doğruydu, en zayıf taraf açıklamalardı. Ne yaptığını kendi cümlelerinle yazmak kodun kendisi kadar önemli. Bu yüzden 3. ve 4. görevde açıklamayı ayrıca istiyoruz.
+
+Kodu kendin yazacaksın. Kavramları öğrenmek için AI'a danışabilirsin, kodu AI'a yazdırmak yasak. "Bu tensörün şekli neden böyle" diye sormak serbest, katman sınıfını yazdırmak değil.
+
+Teslim:
+
+- Kodu GitHub repona "hafta-6" klasörü olarak ekle. "yz50" kullanıcısı collaborator olarak ekli kalsın.
+- Bir video kaydet: WaveNet'in katmanlarını şekiller üzerinden anlat, BatchNorm hatasını göster, karşılaştırma tablonu oku.
+- Repo linkini ve videoyu bu maile cevap olarak gönder.
+- Son teslim: 27 Eylül Pazar 19.00
+
+Sorularınız olursa bu maile dönüş yapabilirsiniz.
