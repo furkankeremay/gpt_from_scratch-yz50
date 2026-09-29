@@ -1,0 +1,48 @@
+Büyük gün geldi. YZ50'nin yedinci haftasında GPT'yi kurmaya başlıyoruz.
+
+Altı haftadır bu güne hazırlanıyordunuz. Backprop'u elle yazdınız, bigram'dan MLP'ye, oradan WaveNet'e geçtiniz. Her modelde bir sonraki harfi tahmin ettiniz ve her seferinde model geçmişe biraz daha uzağa baktı: bigram bir harfe, MLP üç harfe, WaveNet sekiz harfe. Pazar akşamki toplantıda WaveNet'lerinizi ve BatchNorm düzeltmelerinizi gördük, hepinizin eline sağlık.
+
+GPT'yi iki haftada kuracağız. Bu hafta kalbinden başlıyoruz: self-attention. Her harf geçmişteki hangi harflere bakacağına kendisi karar veriyor. ChatGPT'nin içindeki Transformer bu parçanın üst üste dizilmesinden oluşuyor, onu da önümüzdeki hafta kuracağız. Veri de büyüyor: isim listesi yerine Shakespeare'in bütün oyunları.
+
+Bu hafta öğreneceklerin:
+
+Uzun bir metni eğitim verisine çevirmek: karakter tokenizer, train/val ayrımı, rastgele parçalardan batch
+Matris çarpımıyla ağırlıklı ortalama almak: self-attention'ın arkasındaki hile
+query, key ve value: bir token'ın hangi token'a ne kadar bakacağı nasıl hesaplanıyor
+Gelecekteki harfleri neden gizliyoruz: lower triangular maske (torch.tril)
+attention sırayı bilmez: pozisyon embedding'i neden gerekli
+Skorları neden head_size'ın kareköküne bölüyoruz
+
+Kaynaklar:
+
+Andrej Karpathy, "Let's build GPT: from scratch, in code, spelled out": https://www.youtube.com/watch?v=kCc8FmEb1nY
+Videodaki Colab notebook'u: https://colab.research.google.com/drive/1JMLa53HDuA-i7ZBmqV7ZnA3c_fvtXnx-?usp=sharing
+Videonun kodu: https://github.com/karpathy/ng-video-lecture
+Tiny Shakespeare verisi: https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
+
+Bu haftanın görevi, videonun ilk 1 saat 22 dakikası (yanlarında videonun ilgili bölümleri):
+
+Veriyi hazırla ve tabanı kur. Tiny Shakespeare'i oku, karakter tokenizer'ını yaz (encode, decode), veriyi %90 train, %10 val diye ayır. Rastgele parçalardan batch çeken get_batch fonksiyonunu yaz. Hafta 2'deki bigram modelini nn.Module olarak kur, eğit, val loss'u kaydet. Bu senin karşılaştırma tabanın. (7:52 - 38:00)
+Geçmişin ortalamasını üç yoldan al: for döngüsüyle, lower triangular matrisle (torch.tril) çarparak, softmax'la. Üçünün aynı sonucu verdiğini torch.allclose ile göster. Matris çarpımının neden ağırlıklı ortalama olduğunu kendi cümlelerinle yaz. (42:13 - 58:26)
+Tek bir self-attention head yaz: query, key, value ve pozisyon embedding'i. Bir örnekte ağırlık matrisini (wei) yazdır, bir satırını oku: o token hangi token'lara ne kadar bakıyor. Skorları head_size'ın kareköküne neden böldüğümüzü sayıyla göster: bölmeden ve bölerek softmax çıktısını yan yana koy. (58:26 - 1:19:11)
+Head'i bigram modelinin içine koy ve eğit. Val loss'u 1. görevdeki bigram tabanıyla yan yana koy. Ne kadar düştü, neden düştü, kendi cümlelerinle yaz. Metin üretirken girdiyi neden son block_size harfe kırpmak zorunda olduğunu da yaz. (1:19:11 - 1:21:59)
+Ek, erken bitirenler için, ikisinden biri. (a) Eğitilmiş modelde bir cümlenin attention ağırlıklarını ısı haritası olarak çiz. Hangi harf hangisine bakıyor, ne gördüğünü yaz. (b) tril maskesini kaldırıp modeli yeniden eğit. Val loss ne oldu, ürettiği metin ne oldu? Sonucu gelecekteki harfleri görmekle açıkla.
+
+Bu haftanın bölümü 1 saat 22 dakika. Model küçük, bilgisayarında CPU'da eğitilir. Takılırsan tensörlerin şeklini yazdır, hataların çoğu orada görünür. Videoyu izledikten sonra oturmayan görev kalırsa bu maili olduğu gibi bir AI'a ver ve görevi sana açıklatmasını iste.
+
+Geçen haftalardan eksik kalan görev varsa: bu hafta hafta-6 klasörüne tamamlayıp ekleyebilirsin. Teslim mailinde "hafta 6'ya şunları ekledim" diye yaz, yeniden değerlendiririz. Geçen hafta en çok eksik kalan görev 4. görevdi, BatchNorm hatasını göstermek. Onu da bu hafta tamamlayabilirsin.
+
+Bir not: videonun son kodu ng-video-lecture reposunda tek dosya olarak duruyor. Onu kopyalamak kolay, ama sana bir şey öğretmez. Önce kendin yaz, takılınca ya da bitince karşılaştırmak için aç.
+
+Kodu kendin yazacaksın. Kavramları öğrenmek için AI'a danışabilirsin, kodu AI'a yazdırmak yasak. "Bu wei matrisi neden lower triangular" diye sormak serbest, Head sınıfını yazdırmak değil.
+
+Teslim:
+
+Kodu GitHub repona "hafta-7" klasörü olarak ekle. "yz50" kullanıcısı collaborator olarak ekli kalsın.
+Bir video kaydet: bir attention satırını wei matrisi üzerinden anlat, bigram ile tek head'in val loss'unu karşılaştır.
+Repo linkini ve videoyu bu maile cevap olarak gönder.
+Son teslim: 4 Ekim Pazar 19.00
+
+Haftalık toplantımız 4 Ekim Pazar 19.00'da. Davet takvimine gelecek.
+
+Sorularınız olursa bu maile dönüş yapabilirsiniz.
