@@ -1,0 +1,50 @@
+Yedi hafta önce tek bir neuron yazdınız. Bu hafta GPT'yi bitiriyorsunuz. YZ50'nin sekizinci haftasının sonunda elinizde sıfırdan, kendi kodunuzla kurduğunuz ve Shakespeare gibi yazan bir model olacak.
+
+Pazar akşamki toplantıda softmax'ın neden NaN verdiğini, maskeyi kaldırınca loss'un neden düştüğünü ve tek bir residual bağlantının neyi değiştirdiğini gördük. Teslim eden herkesin eline sağlık.
+
+Geçen hafta tek bir self-attention head kurdunuz her harf geçmişteki harflere bakıp kendi ağırlığını seçti. Tek head bigram'ı geçti, ama az. Bu hafta eksik parçaları ekliyoruz birden çok head, feedforward, residual bağlantı ve LayerNorm. Blokları üst üste dizince elinizde küçük bir GPT olacak. Sonra onu büyütüp önce Shakespeare'le, sonra kendi derleyeceğiniz Türkçe metinle eğiteceksiniz.
+
+Bu hafta öğreneceklerin
+
+Multi-head attention birden çok küçük head neden tek büyük head'den iyi çalışıyor
+Transformer bloğu attention'da token'lar birbiriyle konuşuyor, feedforward'da her token kendi başına hesap yapıyor
+Residual bağlantı derin ağ neden hâlâ eğitilebiliyor
+LayerNorm ile senin yazdığın BatchNorm arasındaki fark
+Dropout eklemek, modeli büyütmek, elindeki donanıma göre konfigürasyon seçmek
+Aynı modeli başka bir dilde eğitmek
+
+Kaynaklar
+
+Andrej Karpathy, Let's build GPT from scratch, in code, spelled out, bu hafta 12159'dan sonrası httpswww.youtube.comwatchv=kCc8FmEb1nY
+Videodaki Colab notebook'u httpscolab.research.google.comdrive1JMLa53HDuA-i7ZBmqV7ZnA3c_fvtXnx-usp=sharing
+Videonun kodu httpsgithub.comkarpathyng-video-lecture
+Karpathy'nin nanoGPT reposu httpsgithub.comkarpathynanoGPT
+Vikikaynak, Türkçe telifsiz eserler, 4. görevdeki Türkçe metin için httpstr.wikisource.org
+Attention Is All You Need (Google, 2017), Transformer'ın geldiği makale, okumak isteğe bağlı httpsarxiv.orgabs1706.03762
+
+Bu haftanın görevi, videonun kalan 34 dakikası (yanlarında videonun ilgili bölümleri)
+
+Tek head'i multi-head attention'a çevir aynı boyutu n_head tane küçük head'e böl, çıktıları birleştir. Val loss'u geçen haftaki tek head'le yan yana koy. (12159 - 12425)
+Transformer bloğunu parça parça tamamla feedforward, residual bağlantı, LayerNorm. Her parçayı ekledikten sonra val loss'u kaydet. Tek tablo çıkar bigram, tek head, multi-head, feedforward eklenmiş, residual eklenmiş, LayerNorm eklenmiş. LayerNorm'u hafta 6'da yazdığın BatchNorm1d ile karşılaştır hangi eksende normalize ediyor, neden running_mean tutmuyor, kendi cümlelerinle yaz. (12425 - 13749)
+Modeli büyüt ve dropout ekle. Elindeki donanıma sığan bir konfigürasyon seç n_embd, n_head, n_layer, block_size. Parametre sayısını, val loss'u ve eğitim süresini yaz, neden bu değerleri seçtiğini açıkla. Modelin ürettiği metinden bir örnek koy. (13749 - 14239)
+Aynı modeli Türkçe metinle eğit. Metni kendin derle, Tiny Shakespeare'e yakın boyutta olsun (yaklaşık 1 MB). Kaynaklardaki Vikikaynak'tan başlayabilirsin. Ürettiği metinden örnek ver. Türkçe metnin kaç farklı karakteri var, Shakespeare'inkiyle karşılaştır. İki val loss'u doğrudan karşılaştırabilir misin, neden, yaz.
+Ek, erken bitirenler için, ikisinden biri. (a) Head'leri ayrı ayrı çalıştırmak yerine bütün head'leri tek bir matris çarpımında hesapla, nanoGPT'deki gibi. İki yolun aynı sonucu verdiğini göster. (14622 - 14853) (b) Attention Is All You Need makalesindeki Şekil 1'i kendi kodunla eşleştir hangi kutu senin kodunda var, hangisi yok ve neden yok. (14239 - 14622)
+
+Bu haftanın bölümü 34 dakika, ama asıl vakit eğitimde geçecek. Model büyüdükçe eğitim bilgisayarında yavaşlar. Colab'ın ücretsiz T4 GPU'su bu hafta işini görür. Karpathy'nin en büyük konfigürasyonunu çalıştırmak zorunda değilsin küçült, ama neyi neden küçülttüğünü yaz. Takılırsan tensörlerin şeklini yazdır, hataların çoğu orada görünür. Videoyu izledikten sonra oturmayan görev kalırsa bu maili olduğu gibi bir AI'a ver ve görevi sana açıklatmasını iste.
+
+Geçen haftalardan eksik kalan görev varsa bu hafta hafta-7 klasörüne tamamlayıp ekleyebilirsin. Teslim mailinde hafta 7'ye şunları ekledim diye yaz, yeniden değerlendiririz. Geçen hafta en çok eksik kalan görev 4. görevdi head'i modele koyup val loss'u bigram'la karşılaştırmak. Onu da bu hafta tamamlayabilirsin.
+
+Bir not videonun son kodu ng-video-lecture reposunda tek dosya olarak duruyor. Onu kopyalamak kolay, ama sana bir şey öğretmez. Önce kendin yaz, takılınca ya da bitince karşılaştırmak için aç.
+
+Kodu kendin yazacaksın. Kavramları öğrenmek için AI'a danışabilirsin, kodu AI'a yazdırmak yasak. LayerNorm neden son eksende normalize ediyor diye sormak serbest, Block sınıfını yazdırmak değil.
+
+Teslim
+
+Kodu GitHub repona hafta-8 klasörü olarak ekle. yz50 kullanıcısı collaborator olarak ekli kalsın.
+Bir video kaydet Transformer bloğunun parçalarını loss tablon üzerinden anlat, modelin ürettiği Türkçe metinden örnek göster.
+Repo linkini ve videoyu bu maile cevap olarak gönder.
+Son teslim 11 Ekim Pazar 19.00
+
+Haftalık toplantımız 11 Ekim Pazar 19.00'da. Davet takvimine gelecek.
+
+Sorularınız olursa bu maile dönüş yapabilirsiniz.
